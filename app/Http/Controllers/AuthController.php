@@ -14,6 +14,11 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
         $response = Http::post('https://api-test.eksam.cloud/api/v1/auth/login', [
             'email' => $request->email,
             'password' => $request->password,
