@@ -10,6 +10,7 @@
             </a>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
+                @method('POST')
                 <button type="submit"
                     class="block w-full bg-red-600 hover:bg-red-700 hover:cursor-pointer text-white font-semibold py-3 rounded-lg transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-red-300">
                     Logout
