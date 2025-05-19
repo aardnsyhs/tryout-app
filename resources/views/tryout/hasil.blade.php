@@ -8,10 +8,21 @@
                 Total Nilai Kamu:
                 <span class="font-semibold text-indigo-600">{{ $total }}</span>
             </p>
+            <div class="text-left mb-6 space-y-2">
+                <h3 class="font-semibold text-gray-700">Detail Nilai:</h3>
+                <ul class="list-disc list-inside text-sm text-gray-600">
+                    @foreach ($details as $detail)
+                        <li>
+                            Soal No {{ $detail['no_soal'] }}:
+                            Nilai {{ $detail['nilai'] }}/{{ $detail['max_nilai'] }}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button type="submit"
-                    class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-lg transition-colors hover:cursor-pointer">
+                    class="w-full bg-red-600 hover:bg-red-700 hover:cursor-pointer text-white font-medium py-2.5 rounded-lg transition-colors hover:cursor-pointer">
                     Logout
                 </button>
             </form>

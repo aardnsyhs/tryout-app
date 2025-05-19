@@ -21,9 +21,9 @@ class AuthController extends Controller
 
         if ($response->successful()) {
             session(['token' => $response['data']['access_token']]);
-            return redirect()->route('soal.show', 1);
+            return redirect('/home')->with('success', 'Berhasil login!');
         } else {
-            return back()->withErrors(['login' => 'login gagal.']);
+            return back()->with('error', 'Email atau password salah.');
         }
     }
 
@@ -43,7 +43,7 @@ class AuthController extends Controller
         if ($response->successful()) {
             return redirect('/')->with('success', 'Pendaftaran berhasil. Mohon untuk login.');
         } else {
-            return back()->withErrors(['register' => 'Pendaftaran gagal.']);
+            return back()->with('error', 'Pendaftaran gagal.');
         }
     }
 

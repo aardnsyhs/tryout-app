@@ -15,6 +15,9 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth.session');
 
 Route::middleware('auth.session')->group(function () {
+    Route::get('/home', function () {
+        return view('home.index');
+    });
     Route::get('/soal/selesai', [TryoutController::class, 'selesai'])->name('soal.selesai');
     Route::get('/soal/{no}', [TryoutController::class, 'show'])->name('soal.show');
     Route::post('/soal/{id}/lapor', [TryoutController::class, 'lapor'])->name('soal.lapor');

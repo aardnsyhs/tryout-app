@@ -1,25 +1,18 @@
 import './bootstrap';
+import Swal from 'sweetalert2';
+import { showSuccess, showError } from './utils/alerts.js';
 
-document.querySelectorAll('.auto-save').forEach(radio => {
-    radio.addEventListener('change', async function () {
-        const questionId = this.dataset.questionId;
-        const answerId = this.value;
+window.dispatchSweetAlert = function (type, message) {
+    if (type === 'success') showSuccess(message);
+    if (type === 'error') showError(message);
+};
 
-        await fetch(`/soal/jawab/${questionId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({
-                answer: answerId
-            })
-        }).then(res => {
-            if (!res.ok) {
-                alert('Gagal menyimpan jawaban.');
-            }
-        }).catch(() => {
-            alert('Terjadi kesalahan koneksi.');
-        });
-    });
-});
+window.Swal = Swal;
+
+const alertDiv = document.getElementById('alert-message');
+const type = alertDiv?.dataset.type;
+const message = alertDiv?.dataset.message;
+
+if (type && message) {
+    window.dispatchSweetAlert(type, message);
+}

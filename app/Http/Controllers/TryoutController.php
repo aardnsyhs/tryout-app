@@ -46,18 +46,24 @@ class TryoutController extends Controller
 
     public function simpanJawaban(Request $request, $questionId)
     {
-        $answer = $request->input('answer');
-        if (!$answer)
-            return back()->with('error', 'Pilih salah satu jawaban.');
+        $data = $request->all();
+
+        if ($request->isJson()) {
+            $data = $request->json()->all();
+        }
+
+        $answer = $data['answer'] ?? null;
+
+        if (!$answer) {
+            return response()->json(['error' => 'Pilih salah satu jawaban.'], 400);
+        }
 
         $jawabanSebelumnya = session('jawaban', []);
         $jawabanSebelumnya[$questionId] = $answer;
-
         session(['jawaban' => $jawabanSebelumnya]);
 
-        return back()->with('success', 'Jawaban disimpan.');
+        return response()->json(['success' => 'Jawaban disimpan.']);
     }
-
 
     public function selesai()
     {
@@ -79,13 +85,21 @@ class TryoutController extends Controller
         }
 
         $total = 0;
+        $details = [];
 
         foreach ($questions as $question) {
             $selectedOptionId = $jawaban[$question['id']];
             $option = collect($question['tryout_question_option'])->firstWhere('id', $selectedOptionId);
-            $total += $option['nilai'] ?? 0;
+            $nilai = $option['nilai'] ?? 0;
+            $total += $nilai;
+
+            $details[] = [
+                'no_soal' => $question['no_soal'],
+                'nilai' => $nilai,
+                'max_nilai' => collect($question['tryout_question_option'])->max('nilai') ?? 0,
+            ];
         }
 
-        return view('tryout.hasil', compact('total'));
+        return view('tryout.hasil', compact('total', 'details'));
     }
 }
