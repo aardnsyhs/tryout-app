@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-white">
+    <div class="flex items-center justify-center min-h-[calc(100vh-4rem)] bg-gradient-to-br from-blue-50 to-white">
         <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center space-y-3">
             <div>
                 <h2 class="text-3xl font-bold text-gray-800">Hasil Tryout</h2>

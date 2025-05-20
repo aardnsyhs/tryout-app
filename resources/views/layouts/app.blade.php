@@ -15,53 +15,63 @@
 
 <body class="antialiased">
     @hasSection('show_navbar')
-        <nav class="bg-blue-600 px-4 py-3 shadow-sm">
-            <div class="max-w-screen-xl mx-auto flex items-center justify-between">
-                <a href="{{ route('soal.show', 1) }}" class="text-white font-semibold text-xl tracking-wide">
-                    Tryout App
+        <nav class="bg-blue-600 border-gray-200 shadow-sm">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a href="/home" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Tryout App</span>
                 </a>
-                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none hover:cursor-pointer">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button id="mobile-menu-button" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-white"
+                    aria-controls="mobile-menu" aria-expanded="false">
+                    <span class="sr-only">Toggle main menu</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
-                <div class="hidden md:flex items-center gap-6">
-                    @if(session('token'))
-                        <div class="text-white">
-                            <span class="mr-2">Halo, <strong>{{ session('name') }}</strong></span>
-                        </div>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            @method('POST')
-                            <button type="submit"
-                                class="text-white hover:bg-blue-500 hover:rounded-md px-3 py-1 transition duration-150 ease-in-out">
-                                Logout
-                            </button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="text-white hover:text-blue-200 transition font-medium">Login</a>
-                        <a href="{{ route('register') }}"
-                            class="text-white hover:text-blue-200 transition font-medium">Register</a>
-                    @endif
+                <div class="hidden w-full md:flex md:w-auto md:items-center md:justify-end" id="desktop-menu">
+                    <ul
+                        class="flex flex-col md:flex-row items-center font-medium mt-4 md:mt-0 space-y-2 md:space-y-0 md:space-x-6">
+                        @if(session('token'))
+                            <li class="text-white">Halo, <strong>{{ session('name') }}</strong></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit"
+                                        class="text-white hover:bg-blue-500 hover:rounded-md px-3 py-1 transition">
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                        @else
+                            <li><a href="{{ route('login') }}" class="text-white hover:text-blue-200 font-medium">Login</a></li>
+                            <li><a href="{{ route('register') }}"
+                                    class="text-white hover:text-blue-200 font-medium">Register</a></li>
+                        @endif
+                    </ul>
                 </div>
             </div>
-            <div id="mobile-menu" class="hidden md:hidden mt-2 space-y-1">
-                @if(session('token'))
-                    <div class="px-4 text-white">Halo, <strong>{{ session('name') }}</strong></div>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        @method('POST')
-                        <button type="submit"
-                            class="block w-full text-left px-4 py-2 text-white hover:bg-blue-500 transition rounded-md">
-                            Logout
-                        </button>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}"
-                        class="block px-4 py-2 text-white hover:bg-blue-500 transition rounded-md">Login</a>
-                    <a href="{{ route('register') }}"
-                        class="block px-4 py-2 text-white hover:bg-blue-500 transition rounded-md">Register</a>
-                @endif
+            <div class="hidden md:hidden px-4 pb-4" id="mobile-menu">
+                <ul class="space-y-2">
+                    @if(session('token'))
+                        <li class="text-white">Halo, <strong>{{ session('name') }}</strong></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                @method('POST')
+                                <button type="submit"
+                                    class="block w-full text-left px-4 py-2 text-white hover:bg-blue-500 transition rounded-md">
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
+                    @else
+                        <li><a href="{{ route('login') }}"
+                                class="block px-4 py-2 text-white hover:bg-blue-500 transition rounded-md">Login</a></li>
+                        <li><a href="{{ route('register') }}"
+                                class="block px-4 py-2 text-white hover:bg-blue-500 transition rounded-md">Register</a></li>
+                    @endif
+                </ul>
             </div>
         </nav>
     @endif

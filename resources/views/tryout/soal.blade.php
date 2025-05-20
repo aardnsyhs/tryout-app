@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-md">
+    <div class="max-w-2xl mx-auto md:mt-5 bg-white p-6 rounded-xl shadow-md">
         <div class="flex justify-between items-center">
             <h3 class="text-xl font-semibold text-gray-800 mb-4 mt-5">
                 Soal {{ $question['no_soal'] }}
@@ -27,11 +27,14 @@
                 @endphp
                 <label for="option-{{ $option['id'] }}"
                     class="flex items-center gap-3 p-4 border border-gray-300 rounded-md cursor-pointer transition-all has-[:checked]:border-blue-600 has-[:checked]:text-blue-600">
+
                     <input id="option-{{ $option['id'] }}" type="radio" name="answer" value="{{ $option['id'] }}"
                         data-question-id="{{ $question['id'] }}"
                         class="auto-save w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 checked:bg-blue-600 shrink-0"
-                        @if((string) $selected === (string) $option['id']) checked @endif <span class="text-base leading-snug">
-                    <strong>{{ $option['inisial'] }}.</strong> {!! $option['jawaban'] !!}
+                        @if((string) $selected === (string) $option['id']) checked @endif>
+
+                    <span class="text-base leading-relaxed">
+                        <strong>{{ $option['inisial'] }}.</strong> {!! $option['jawaban'] !!}
                     </span>
                 </label>
             @endforeach

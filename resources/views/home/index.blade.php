@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div class="flex items-center justify-center min-h-[calc(100vh-4rem)] bg-gray-100 px-4">
         <div class="max-w-md w-full bg-white p-8 rounded-xl shadow-lg text-center space-y-6">
             <h2 class="text-3xl font-extrabold text-gray-900">Selamat Datang</h2>
             <a href="{{ route('soal.show', 1) }}"
