@@ -14,6 +14,8 @@ class TryoutController extends Controller
 
     public function show($no)
     {
+        session(['last_soal_url' => url()->current()]);
+
         if (session('selesai_tryout')) {
             return redirect()->route('soal.selesai')
                 ->with('error', 'Kamu sudah menyelesaikan tryout.');
@@ -77,6 +79,8 @@ class TryoutController extends Controller
 
     public function selesai()
     {
+        session(['last_soal_url' => url()->current()]);
+
         $questions = collect(session('questions', []));
         $jawaban = session('jawaban', []);
 
