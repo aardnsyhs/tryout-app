@@ -75,15 +75,6 @@
         data-message="{{ session('success') ?? session('error') ?? '' }}">
     </div>
     @vite(['resources/js/app.js'])
-    <script>
-        const mobileMenuBtn = document.getElementById('mobile-menu-button');
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                const menu = document.getElementById('mobile-menu');
-                if (menu) menu.classList.toggle('hidden');
-            });
-        }
-    </script>
 </body>
 
 </html>
