@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('show_navbar') <!-- Aktifkan navbar -->
-@endsection
-
 @section('content')
     <div class="max-w-2xl mx-auto md:mt-5 bg-white p-6 rounded-xl shadow-md">
         <div class="flex justify-between items-center mb-2">

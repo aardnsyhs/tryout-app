@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('show_navbar') <!-- Aktifkan navbar -->
-@endsection
-
 @section('content')
     <div class="flex items-center justify-center min-h-[calc(100vh-4rem)] bg-gradient-to-br from-blue-50 to-white">
         <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center space-y-3">
