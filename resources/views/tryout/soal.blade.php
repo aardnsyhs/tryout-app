@@ -5,8 +5,8 @@
 
 @section('content')
     <div class="max-w-2xl mx-auto md:mt-5 bg-white p-6 rounded-xl shadow-md">
-        <div class="flex justify-between items-center">
-            <h3 class="text-xl font-semibold text-gray-800 mb-4 mt-5">
+        <div class="flex justify-between items-center mb-2">
+            <h3 class="text-xl font-semibold text-gray-800">
                 Soal {{ $question['no_soal'] }}
             </h3>
             <button data-modal-target="report-modal" data-modal-toggle="report-modal"

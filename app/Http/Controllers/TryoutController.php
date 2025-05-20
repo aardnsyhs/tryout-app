@@ -36,12 +36,17 @@ class TryoutController extends Controller
             'laporan' => 'required|string|max:255',
         ]);
 
-        Http::withToken(session('token'))->post('https://api-test.eksam.cloud/api/v1/tryout/lapor-soal/create', [
+        $response = Http::withToken(session('token'))->post('https://api-test.eksam.cloud/api/v1/tryout/lapor-soal/create', [
             'tryout_question_id' => $id,
             'laporan' => $request->laporan,
         ]);
 
-        return back()->with('success', 'Laporan berhasil dikirim.');
+        if ($response->successful()) {
+            return back()->with('success', 'Laporan berhasil dikirim.');
+        } else {
+            $errors = $response->json('messages');
+            return back()->with('error', $errors)->withInput();
+        }
     }
 
     public function simpanJawaban(Request $request, $questionId)
