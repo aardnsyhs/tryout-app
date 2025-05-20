@@ -25,4 +25,11 @@
             </div>
         </div>
     </div>
+    <script>
+        // Hapus cache halaman sebelumnya agar tombol back tidak berfungsi
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, "", window.location.href);
+        };
+    </script>
 @endsection

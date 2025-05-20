@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AuthSession;
+use App\Http\Middleware\PreventBackHistory;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,7 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'auth.session' => AuthSession::class
+            'auth.session' => AuthSession::class,
+            'prevent.back' => PreventBackHistory::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

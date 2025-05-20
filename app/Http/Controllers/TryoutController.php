@@ -14,6 +14,11 @@ class TryoutController extends Controller
 
     public function show($no)
     {
+        if (session('selesai_tryout')) {
+            return redirect()->route('soal.selesai')
+                ->with('error', 'Kamu sudah menyelesaikan tryout.');
+        }
+
         if (!session()->has('questions')) {
             $response = Http::withToken(session('token'))->get('https://api-test.eksam.cloud/api/v1/tryout/question');
             session(['questions' => $response->json('data')]);
@@ -72,11 +77,20 @@ class TryoutController extends Controller
 
     public function selesai()
     {
-        $jawaban = session('jawaban', []);
         $questions = collect(session('questions', []));
+        $jawaban = session('jawaban', []);
+
+        if ($questions->isEmpty()) {
+            return redirect()->route('soal.show', 1)
+                ->with('error', 'Silakan mulai mengerjakan soal terlebih dahulu.');
+        }
+
+        if (empty($jawaban)) {
+            return redirect()->route('soal.show', $questions->min('no_soal'))
+                ->with('error', 'Kamu belum mengisi jawaban apapun.');
+        }
 
         $soalBelumDijawab = [];
-
         foreach ($questions as $question) {
             if (!isset($jawaban[$question['id']])) {
                 $soalBelumDijawab[] = $question['no_soal'];
@@ -105,6 +119,7 @@ class TryoutController extends Controller
             ];
         }
 
+        session(['selesai_tryout' => true]);
         return view('tryout.hasil', compact('total', 'details'));
     }
 }
