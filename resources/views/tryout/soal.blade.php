@@ -1,19 +1,16 @@
 @extends('layouts.app')
 
+@section('show_navbar') <!-- Aktifkan navbar -->
+@endsection
+
 @section('content')
     <div class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-md">
-        @if (session('error'))
-            <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <div class="flex justify-between">
-            <h3 class="text-xl font-semibold text-gray-800 mb-4">
+        <div class="flex justify-between items-center">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 mt-5">
                 Soal {{ $question['no_soal'] }}
             </h3>
             <button data-modal-target="report-modal" data-modal-toggle="report-modal"
-                class="block text-white bg-red-700 hover:bg-red-800 hover:cursor-pointer focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 text-center"
+                class="block text-white bg-red-500 hover:bg-red-600 hover:cursor-pointer focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2 text-center"
                 type="button">
                 Laporkan Soal
             </button>
@@ -25,22 +22,22 @@
 
         <div class="space-y-2">
             @foreach ($question['tryout_question_option'] as $option)
+                @php
+                    $selected = session('jawaban')[$question['id']] ?? null;
+                @endphp
                 <label for="option-{{ $option['id'] }}"
                     class="flex items-center gap-3 p-4 border border-gray-300 rounded-md cursor-pointer transition-all has-[:checked]:border-blue-600 has-[:checked]:text-blue-600">
                     <input id="option-{{ $option['id'] }}" type="radio" name="answer" value="{{ $option['id'] }}"
                         data-question-id="{{ $question['id'] }}"
                         class="auto-save w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 checked:bg-blue-600 shrink-0"
-                        @if(session('jawaban')[$question['id']] ?? '' == $option['id']) checked @endif />
-                    <span class="text-base leading-snug">
-                        <strong>{{ $option['inisial'] }}.</strong> {!! $option['jawaban'] !!}
+                        @if((string) $selected === (string) $option['id']) checked @endif <span class="text-base leading-snug">
+                    <strong>{{ $option['inisial'] }}.</strong> {!! $option['jawaban'] !!}
                     </span>
                 </label>
             @endforeach
         </div>
 
-        <hr class="my-6">
-
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center mt-6">
             @if ($no > $min)
                 <a href="{{ route('soal.show', $no - 1) }}"
                     class="text-indigo-600 hover:text-indigo-800 font-medium flex items-center space-x-2">

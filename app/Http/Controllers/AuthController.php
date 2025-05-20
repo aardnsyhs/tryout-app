@@ -25,7 +25,10 @@ class AuthController extends Controller
         ]);
 
         if ($response->successful()) {
-            session(['token' => $response['data']['access_token']]);
+            session([
+                'token' => $response['data']['access_token'],
+                'name' => $response['data']['user']['name']
+            ]);
             return redirect('/home')->with('success', 'Berhasil login!');
         } else {
             return back()->with('error', 'Email atau password salah.');
