@@ -5,7 +5,7 @@ export function showSuccess(message = 'Berhasil!') {
         icon: 'success',
         title: 'Berhasil',
         text: message,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#4F46E5',
     });
 }
 

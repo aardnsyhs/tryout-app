@@ -57,7 +57,14 @@ class AuthController extends Controller
         if ($response->successful()) {
             return redirect('/')->with('success', 'Pendaftaran berhasil. Silakan untuk login.');
         } else {
-            return back()->with('error', 'Pendaftaran gagal.')->withInput();
+            $errors = $response->json('messages');
+            if (isset($errors['email'])) {
+                $errorMessage = $errors['email'][0];
+                if ($errorMessage == "The email must be a valid email address.") {
+                    $errorMessage = "Alamat email tidak valid.";
+                }
+                return back()->with('error', $errorMessage)->withInput();
+            }
         }
     }
 

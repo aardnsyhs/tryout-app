@@ -14,8 +14,8 @@
 </head>
 
 <body class="antialiased">
-    @hasSection('show_navbar')
-        <nav class="bg-blue-600 border-gray-200 shadow-sm">
+    @unless(request()->is('login', 'register') || !session()->has('token'))
+        <nav class="bg-indigo-600 border-gray-200 shadow-sm">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="/home" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Tryout App</span>
@@ -43,10 +43,6 @@
                                     </button>
                                 </form>
                             </li>
-                        @else
-                            <li><a href="{{ route('login') }}" class="text-white hover:text-blue-200 font-medium">Login</a></li>
-                            <li><a href="{{ route('register') }}"
-                                    class="text-white hover:text-blue-200 font-medium">Register</a></li>
                         @endif
                     </ul>
                 </div>
@@ -65,16 +61,11 @@
                                 </button>
                             </form>
                         </li>
-                    @else
-                        <li><a href="{{ route('login') }}"
-                                class="block px-4 py-2 text-white hover:bg-blue-500 transition rounded-md">Login</a></li>
-                        <li><a href="{{ route('register') }}"
-                                class="block px-4 py-2 text-white hover:bg-blue-500 transition rounded-md">Register</a></li>
                     @endif
                 </ul>
             </div>
         </nav>
-    @endif
+    @endunless
     <main>
         @yield('content')
     </main>
@@ -85,10 +76,13 @@
     </div>
     @vite(['resources/js/app.js'])
     <script>
-        document.getElementById('mobile-menu-button').addEventListener('click', function () {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
+        const mobileMenuBtn = document.getElementById('mobile-menu-button');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const menu = document.getElementById('mobile-menu');
+                if (menu) menu.classList.toggle('hidden');
+            });
+        }
     </script>
 </body>
 
