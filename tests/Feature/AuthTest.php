@@ -95,4 +95,20 @@ class AuthTest extends TestCase
         $response->assertRedirect('/register');
         $response->assertSessionHas('error', 'Alamat email tidak valid.');
     }
+
+    public function test_logout_redirects_to_login_successfull()
+    {
+        Http::fake([
+            'https://api-test.eksam.cloud/api/v1/auth/register' => Http::response([
+                'message' => 'logout success'
+            ], 200)
+        ]);
+
+        $this->withSession([
+            'token' => 'valid_access_token',
+        ]);
+
+        $response = $this->post('/logout');
+        $response->assertRedirect('/');
+    }
 }
